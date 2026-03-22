@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mirtube - Видеохостинг</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="header-left">
+            <button class="menu-btn">☰</button>
+            <div class="logo">
+                <div class="logo-icon"></div>
+                <span class="logo-text">Mirtube</span>
+            </div>
+        </div>
+        
+        <div class="header-center">
+            <div class="search-bar">
+                <input type="text" placeholder="Поиск на YouTube и Mirtube" id="searchInput">
+                <button class="search-btn" id="searchBtn">🔍</button>
+            </div>
+            <div class="search-hint" id="searchHint" style="display: none;">
+                💡 Теперь можно искать настоящие видео с YouTube!
+            </div>
+        </div>
+        
+        <div class="header-right">
+            <button class="icon-btn">📹</button>
+            <button class="icon-btn">🔔</button>
+            <button class="user-btn">👤</button>
+        </div>
+    </header>
+
+    <!-- Боковое меню -->
+    <aside class="sidebar" id="sidebar">
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" data-page="home">🏠 Главная</a>
+            <a href="#" class="nav-item" data-page="shorts">📱 Shorts</a>
+            <a href="#" class="nav-item" data-page="trending">🔥 В тренде</a>
+            <a href="#" class="nav-item" data-page="subscriptions">📺 Подписки</a>
+            <hr>
+            <a href="#" class="nav-item" data-page="library">📚 Библиотека</a>
+            <a href="#" class="nav-item" data-page="history">🕐 История</a>
+            <a href="#" class="nav-item" data-page="watchlater">⏰ Смотреть позже</a>
+            <a href="#" class="nav-item" data-page="liked">👍 Понравившиеся</a>
+            <hr>
+            <h3 class="sidebar-title">Подписки</h3>
+            <a href="#" class="nav-item">🎮 Gaming Channel</a>
+            <a href="#" class="nav-item">🎵 Music Hub</a>
+            <a href="#" class="nav-item">🎬 Movie Reviews</a>
+        </nav>
+    </aside>
+
+    <!-- Основной контент -->
+    <main class="main-content" id="mainContent">
+        <!-- Категории -->
+        <div class="categories" id="categories">
+            <button class="category-btn active">Все</button>
+            <button class="category-btn">Игры</button>
+            <button class="category-btn">Музыка</button>
+            <button class="category-btn">Новости</button>
+            <button class="category-btn">Спорт</button>
+            <button class="category-btn">Обучение</button>
+            <button class="category-btn">Развлечения</button>
+        </div>
+
+        <!-- Сетка видео -->
+        <div class="video-grid" id="videoGrid">
+            <!-- Видео будут добавлены через JavaScript -->
+        </div>
+    </main>
+
+    <!-- Страница канала -->
+    <div class="channel-page" id="channelPage" style="display: none;">
+        <div class="profile-header">
+            <div class="profile-banner" id="channelBanner"></div>
+            <div class="profile-info">
+                <img src="https://via.placeholder.com/120" alt="Channel" class="profile-avatar" id="channelAvatar">
+                <div class="profile-details">
+                    <h1 id="channelName">Название канала</h1>
+                    <p id="channelHandle">@channel</p>
+                    <p id="channelStats">0 подписчиков • 0 видео</p>
+                    <p id="channelDescription">Описание канала</p>
+                    <button class="profile-edit-btn" id="channelSubscribeBtn" onclick="toggleChannelSubscribe()">Подписаться</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-tabs">
+            <button class="profile-tab active" onclick="switchChannelTab('videos')">Видео</button>
+            <button class="profile-tab" onclick="switchChannelTab('shorts')">Shorts</button>
+            <button class="profile-tab" onclick="switchChannelTab('about')">О канале</button>
+        </div>
+        
+        <div class="profile-content" id="channelContent">
+            <div class="video-grid" style="padding: 0;"></div>
+        </div>
+    </div>
+
+    <!-- Страница профиля -->
+    <div class="profile-page" id="profilePage" style="display: none;">
+        <div class="profile-header">
+            <div class="profile-banner" id="profileBanner">
+                <button class="change-banner-btn" onclick="changeBanner()">📷 Изменить баннер</button>
+            </div>
+            <div class="profile-info">
+                <div class="avatar-container">
+                    <img src="https://via.placeholder.com/120" alt="Profile" class="profile-avatar" id="profileAvatar">
+                    <button class="change-avatar-btn" onclick="changeAvatar()">📷</button>
+                </div>
+                <div class="profile-details">
+                    <h1 id="profileName">Мой канал</h1>
+                    <p id="profileHandle">@myChannel</p>
+                    <p id="profileStats">0 подписчиков • 0 видео</p>
+                    <p id="profileDescription">Добро пожаловать на мой канал!</p>
+                    <button class="profile-edit-btn" onclick="openProfileEditor()">✏️ Настроить канал</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-tabs">
+            <button class="profile-tab active" onclick="switchProfileTab('videos')">Видео</button>
+            <button class="profile-tab" onclick="switchProfileTab('shorts')">Shorts</button>
+            <button class="profile-tab" onclick="switchProfileTab('playlists')">Плейлисты</button>
+            <button class="profile-tab" onclick="switchProfileTab('about')">О канале</button>
+        </div>
+        
+        <div class="profile-content" id="profileContent">
+            <div class="empty-state">
+                <div style="font-size: 64px; margin-bottom: 20px;">📹</div>
+                <h2>Загрузите своё первое видео</h2>
+                <p>Начните делиться своим контентом с миром!</p>
+                <button class="upload-btn" onclick="uploadVideo()">📤 Загрузить видео</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно редактора профиля -->
+    <div class="modal" id="profileEditorModal">
+        <div class="modal-content profile-editor">
+            <button class="close-btn" onclick="closeProfileEditor()">✕</button>
+            <h2>Настройка канала</h2>
+            
+            <div class="editor-section">
+                <h3>Основная информация</h3>
+                <div class="form-group">
+                    <label>Название канала</label>
+                    <input type="text" id="editName" placeholder="Введите название канала" maxlength="50">
+                    <span class="char-count" id="nameCount">0/50</span>
+                </div>
+                
+                <div class="form-group">
+                    <label>Идентификатор (@handle)</label>
+                    <input type="text" id="editHandle" placeholder="@myChannel" maxlength="30">
+                </div>
+                
+                <div class="form-group">
+                    <label>Описание</label>
+                    <textarea id="editDescription" placeholder="Расскажите о своём канале" maxlength="1000" rows="4"></textarea>
+                    <span class="char-count" id="descCount">0/1000</span>
+                </div>
+            </div>
+            
+            <div class="editor-section">
+                <h3>Контактная информация</h3>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="editEmail" placeholder="your@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label>Ссылки</label>
+                    <div id="linksList">
+                        <div class="link-item">
+                            <input type="text" placeholder="Название ссылки" class="link-title">
+                            <input type="url" placeholder="https://..." class="link-url">
+                            <button onclick="removeLink(this)">🗑️</button>
+                        </div>
+                    </div>
+                    <button class="add-link-btn" onclick="addLink()">➕ Добавить ссылку</button>
+                </div>
+            </div>
+            
+            <div class="editor-section">
+                <h3>Внешний вид</h3>
+                <div class="form-group">
+                    <label>Цвет баннера</label>
+                    <div class="color-picker">
+                        <input type="color" id="bannerColor1" value="#667eea">
+                        <input type="color" id="bannerColor2" value="#764ba2">
+                        <span>Градиент</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="editor-actions">
+                <button class="cancel-btn" onclick="closeProfileEditor()">Отмена</button>
+                <button class="save-btn" onclick="saveProfile()">💾 Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shorts контейнер -->
+    <div class="shorts-container" id="shortsContainer" style="display: none;">
+        <button class="shorts-close-btn" onclick="switchPage('home')">✕</button>
+        <div class="shorts-wrapper" id="shortsWrapper">
+            <!-- Shorts будут добавлены через JavaScript -->
+        </div>
+        <button class="shorts-nav-btn shorts-prev" onclick="scrollShorts(-1)">▲</button>
+        <button class="shorts-nav-btn shorts-next" onclick="scrollShorts(1)">▼</button>
+    </div>
+
+    <!-- Модальное окно видеоплеера -->
+    <div class="modal" id="videoModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeVideo()">✕</button>
+            <div class="video-player">
+                <div id="youtubePlayer"></div>
+                <video id="videoPlayer" controls style="display: none;">
+                    <source src="" type="video/mp4">
+                </video>
+            </div>
+            <div class="video-info">
+                <h2 id="videoTitle"></h2>
+                <div class="video-stats">
+                    <span id="videoViews"></span>
+                    <span id="videoDate"></span>
+                </div>
+                <div class="video-actions">
+                    <button class="action-btn" onclick="toggleLike()">👍 <span id="likes">0</span></button>
+                    <button class="action-btn" onclick="toggleDislike()">👎</button>
+                    <button class="action-btn" onclick="shareVideo()">↗️ Поделиться</button>
+                    <button class="action-btn" onclick="saveVideo()">💾 Сохранить</button>
+                </div>
+                <div class="channel-info">
+                    <img src="https://via.placeholder.com/48" alt="Channel" class="channel-avatar" style="cursor: pointer;" onclick="openChannel(currentVideo.channel, null)">
+                    <div class="channel-details" style="cursor: pointer;" onclick="openChannel(currentVideo.channel, null)">
+                        <h3 id="channelName"></h3>
+                        <p id="channelSubs"></p>
+                    </div>
+                    <button class="subscribe-btn" onclick="toggleSubscribe()">Подписаться</button>
+                </div>
+                <div class="video-description">
+                    <p id="videoDescription"></p>
+                </div>
+            </div>
+            <div class="comments-section">
+                <h3>Комментарии</h3>
+                <div class="comment-input">
+                    <img src="https://via.placeholder.com/40" alt="User" class="user-avatar">
+                    <input type="text" placeholder="Добавьте комментарий..." id="commentInput">
+                    <button class="comment-submit-btn" onclick="addComment()">Отправить</button>
+                </div>
+                <div class="comments-list" id="commentsList">
+                    <!-- Комментарии -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+</body>
+</html>
